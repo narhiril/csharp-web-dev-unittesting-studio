@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace BalancedBracketsNS
 {
@@ -25,19 +26,60 @@ namespace BalancedBracketsNS
         */
         public static bool HasBalancedBrackets(String str)
         {
-            int brackets = 0;
+            int openBrackets = 0;
+            int closeBrackets = 0;
             foreach (char ch in str.ToCharArray())
             {
                 if (ch == '[')
                 {
-                    brackets++;
+                    openBrackets++;
                 }
                 else if (ch == ']')
                 {
-                    brackets--;
+                    closeBrackets++;
                 }
             }
-            return brackets == 0;
+            if (openBrackets != closeBrackets)
+            {
+                return false;
+            }
+            else
+            {
+                if (openBrackets == 0)
+                {
+                    return true;
+                }
+                char[] strArray = str.ToCharArray();
+                for (int i = 0; i < openBrackets; i++)
+                {
+                    int indexOpen = Array.IndexOf(strArray, '[');
+                    int indexClose = Array.IndexOf(strArray, ']');
+                    if (indexOpen > indexClose)
+                    {
+                        return false;
+                    }
+                    for(int j = indexOpen; j < indexClose; j++)
+                    {
+                        if (strArray[j+1] == '[')
+                        {
+                            return false;
+                        }
+                    }
+                    strArray[indexOpen] = 'm';
+                    strArray[indexClose] = 'm';
+                }
+                return true;
+                
+
+                /*
+                string pattern = @"\[[^\[]*\]";
+                var expression = new Regex(pattern);
+                MatchCollection matches = expression.Matches(str);
+                return matches.Count == closeBrackets;
+                */
+            }
+            
+            
         }
     }
 }

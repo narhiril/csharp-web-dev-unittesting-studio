@@ -6,7 +6,7 @@ namespace BalancedBracketsNS
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine(BalancedBrackets.HasBalancedBrackets("[launch]c[]de]["));
         }
     }
 }
